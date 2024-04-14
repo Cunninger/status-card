@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>LeetCode Info</title>
+</head>
+<body>
+<h1>LeetCode Info</h1>
+
+<form id="userForm">
+    <label for="userId">User ID:</label><br>
+    <input type="text" id="userId" name="userId"><br>
+    <input type="submit" value="Submit">
+</form>
+
+<p>Easy Solved: <span th:text="${data.easy_solved}"></span></p>
+<p>Medium Solved: <span th:text="${data.medium_solved}"></span></p>
+<p>Hard Solved: <span th:text="${data.hard_solved}"></span></p>
+<p>Total Solved: <span th:text="${data.total_solved}"></span></p>
+
+<script>
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+        // Prevent the form from being submitted normally
+        event.preventDefault();
+
+        // Get the user ID from the form
+        var userId = document.getElementById('userId').value;
+
+        // Send a GET request to the server
+        window.location.href = 'http://127.0.0.1:7788/leetcode/info/' + userId;
+    });
+</script>
+
+</body>
+</html>

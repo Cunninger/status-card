@@ -4,34 +4,34 @@ import com.followjs.entity.LeetCodeData;
 import com.followjs.service.LeetCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.websocket.server.PathParam;
 
 /**
  * 功能：
  * 日期：2024/4/14 下午3:43
  */
-@RestController
+@Controller
 @RequestMapping("/leetcode")
 public class LeetCodeController {
 
     @Autowired
     private LeetCodeService leetCodeService;
+    @GetMapping("/info/{username}")
+    public ModelAndView getLeetCodeInfo(@PathVariable String username) {
 
-    @GetMapping
-    public ResponseEntity<?> getLeetCodeInfo(@RequestParam String username, @RequestParam(required = false) String cn,
-                                             @RequestParam(required = false) String theme, @RequestParam(required = false) String cn_username,
-                                             @RequestParam(required = false) String lang, @RequestParam(required = false) String raw) {
-        LeetCodeData data = leetCodeService.getLeetCodeInfo(username, cn, theme, cn_username, lang, raw);
-        if (raw != null) {
-            return ResponseEntity.ok(data);
-        }
-        // set headers and return SVG image
-        return null;
+        LeetCodeData leetCodeData = leetCodeService.getLeetCodeInfo(username);
+        // 返回一个index,html显示leetcodeDate的信息
+
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("data", leetCodeData);
+        return mav;
 
 
 
     }
+
 }
