@@ -1,6 +1,9 @@
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -9,6 +12,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GetUserIdTest {
     @Test
@@ -20,15 +25,21 @@ public class GetUserIdTest {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        JSONArray json = new JSONArray(response.body());
-        System.out.println(json);
-//        JSONObject app = json.getJSONObject("app");
-//        JSONObject app240 = app.getJSONObject("240");
-//        JSONArray pageList = app240.getJSONArray("pageList");
-//        JSONObject pageList1 = pageList.getJSONObject(1);
-//        JSONArray list = pageList1.getJSONArray("list");
-//        JSONObject list0 = list.getJSONObject(0);
-//        long userId = list0.getLong("userId");
-//        System.out.println("User ID: " + userId);
+        // 获取HTML内容
+        String html = response.body();
+
+        // 定义正则表达式
+        Pattern pattern = Pattern.compile("\"userId\":(\\d+),");
+
+
+        // 创建Matcher对象
+        Matcher matcher = pattern.matcher(html);
+
+        // 查找匹配的字符串
+        if (matcher.find()) {
+            System.out.println("Matched text: " + matcher.group(1));
+        } else {
+            System.out.println("No match found.");
+        }
     }
 }
