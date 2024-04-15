@@ -25,8 +25,6 @@ import java.util.Map;
  * 功能：
  * 日期：2024/4/14 下午3:44
  */
-@RestController
-@RequestMapping ("/leetcode")
 public class LeetCodeServiceImpl implements LeetCodeService {
 
 
