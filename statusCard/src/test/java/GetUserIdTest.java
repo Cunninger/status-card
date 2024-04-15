@@ -20,7 +20,7 @@ public class GetUserIdTest {
     public void getUserId() throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://www.nowcoder.com/search/user?query=EnofTaiPeople&type=user&searchType=%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F&subType=0"))
+                .uri(new URI("https://www.nowcoder.com/search/user?query=GoLeeX&type=user&searchType=%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F&subType=0"))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -37,7 +37,7 @@ public class GetUserIdTest {
 
         // 查找匹配的字符串
         if (matcher.find()) {
-            System.out.println("Matched text: " + matcher.group(1));
+            System.out.println("Matched text: " + matcher.group(1));// 匹配到的第一个分组
         } else {
             System.out.println("No match found.");
         }
