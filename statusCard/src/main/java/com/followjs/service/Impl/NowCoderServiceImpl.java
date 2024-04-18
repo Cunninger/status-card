@@ -97,7 +97,8 @@ public class NowCoderServiceImpl implements NowCoderService {
         String html = response.body();
 
         // 定义正则表达式
-        Pattern pattern = Pattern.compile("<div class=\"state-num rate-score6\">(\\d+)");
+//        Pattern pattern = Pattern.compile("<div class=\"state-num rate-score2\">(\\d+)");
+        Pattern pattern = Pattern.compile("<a href=\"javascript:void\\(0\\);\" class=\"state-num rate-score\\d+\">(\\d+)</a>");
 
 
         // 创建Matcher对象
