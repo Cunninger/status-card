@@ -3,35 +3,33 @@ package com.followjs.controller;
 import com.followjs.entity.LeetCodeData;
 import com.followjs.service.LeetCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.websocket.server.PathParam;
-
-/**
- * 功能：
- * 日期：2024/4/14 下午3:43
- */
 @Controller
-@RequestMapping("/leetcode")
+@RequestMapping("/api")
 public class LeetCodeController {
 
     @Autowired
     private LeetCodeService leetCodeService;
-    @GetMapping("/info/{username}")
-    public ModelAndView getLeetCodeInfo(@PathVariable String username) {
 
-        LeetCodeData leetCodeData = leetCodeService.getLeetCodeInfo(username);
-        // 返回一个index,html显示leetcodeDate的信息
-
-        ModelAndView mav = new ModelAndView("index");
-        mav.addObject("data", leetCodeData);
-        return mav;
-
-
-
+    @GetMapping("/leetcode")
+    public ModelAndView showForm() {
+        return new ModelAndView("form");
     }
 
+    @PostMapping("/leetcode/info")
+    public ModelAndView getLeetCodeInfo(@RequestParam String username) {
+        LeetCodeData leetCodeData = leetCodeService.getLeetCodeInfo(username);
+        if (leetCodeData == null) {
+            leetCodeData = new LeetCodeData(); // 创建一个新的对象，避免 null
+        }
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("LeetCodeData", leetCodeData);
+        return mav;
+    }
 }
