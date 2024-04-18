@@ -10,8 +10,19 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NowCoderData {
-    private int rating;
-    private int ratingRank;
-    private int competitionCount;
-    private int hasPassedProblem;
+    public String rating;
+    public String ratingRank;
+    public String competitionCount;
+    public String hasPassedProblem;
+
+    // toString
+    @Override
+    public String toString() {
+        return "NowCoderData{" +
+                "rating=" + rating +
+                ", ratingRank=" + ratingRank +
+                ", competitionCount=" + competitionCount +
+                ", hasPassedProblem=" + hasPassedProblem +
+                '}';
+    }
 }

@@ -1,24 +1,62 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>LeetCode Info</title>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<h1>LeetCode Info</h1>-->
+
+<!--<form id="userForm">-->
+<!--    <label for="userId">User ID:</label><br>-->
+<!--    <input type="text" id="userId" name="userId"><br>-->
+<!--    <input type="submit" value="Submit">-->
+<!--</form>-->
+
+<!--<p>Easy Solved: <span th:text="${data.easy_solved}"></span></p>-->
+<!--<p>Medium Solved: <span th:text="${data.medium_solved}"></span></p>-->
+<!--<p>Hard Solved: <span th:text="${data.hard_solved}"></span></p>-->
+<!--<p>Total Solved: <span th:text="${data.total_solved}"></span></p>-->
+
+<!--<script>-->
+<!--    document.getElementById('userForm').addEventListener('submit', function(event) {-->
+<!--        // Prevent the form from being submitted normally-->
+<!--        event.preventDefault();-->
+
+<!--        // Get the user ID from the form-->
+<!--        var userId = document.getElementById('userId').value;-->
+
+<!--        // Send a GET request to the server-->
+<!--        window.location.href = 'http://127.0.0.1:7788/leetcode/info/' + userId;-->
+<!--    });-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>LeetCode Info</title>
+    <title>NowCoder Info</title>
 </head>
-<body>
-<h1>LeetCode Info</h1>
 
-<form id="userForm">
-    <label for="userId">User ID:</label><br>
-    <input type="text" id="userId" name="userId"><br>
+<body>
+<h1>NowCoder Info</h1>
+
+<form id="userForm1">
+    <label for="userId1">User ID:</label><br>
+    <input type="text" id="userId1" name="userId"><br>
     <input type="submit" value="Submit">
 </form>
 
-<p>Easy Solved: <span th:text="${data.easy_solved}"></span></p>
-<p>Medium Solved: <span th:text="${data.medium_solved}"></span></p>
-<p>Hard Solved: <span th:text="${data.hard_solved}"></span></p>
-<p>Total Solved: <span th:text="${data.total_solved}"></span></p>
+<p>Rating: <span th:text="${data1.rating}"></span></p>
+<p>Rating Rank: <span th:text="${data1.ratingRank}"></span></p>
+<p>Competition Count: <span th:text="${data1.competitionCount}"></span></p>
+<p>Has Passed Problem: <span th:text="${data1.hasPassedProblem}"></span></p>
 
 <script>
-    document.getElementById('userForm').addEventListener('submit', function(event) {
+    document.getElementById('userForm1').addEventListener('submit', function(event) {
         // Prevent the form from being submitted normally
         event.preventDefault();
 
@@ -26,7 +64,7 @@
         var userId = document.getElementById('userId').value;
 
         // Send a GET request to the server
-        window.location.href = 'http://127.0.0.1:7788/leetcode/info/' + userId;
+        window.location.href = 'http://127.0.0.1:7788/nowcoder/info/' + userId;
     });
 </script>
 

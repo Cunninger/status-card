@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LeetCodeData {
-    private int total_solved;
-    private int easy_solved;
-    private int medium_solved;
-    private int hard_solved;
+    public int total_solved;
+    public int easy_solved;
+    public int medium_solved;
+    public int hard_solved;
 
 }

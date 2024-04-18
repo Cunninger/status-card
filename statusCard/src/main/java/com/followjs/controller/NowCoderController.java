@@ -18,19 +18,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class NowCoderController {
 
     @Autowired
-    private NowCoderController nowCoderController;
+    private NowCoderService nowCoderService;
     @GetMapping("/info/{username}")
-    public ModelAndView getNewCoderInfo(@PathVariable String username) {
+    public ModelAndView getNewCoderInfo(@PathVariable String username) throws Exception {
 
 //        NowCoderData leetCodeData = NowCoderService.get;
         // 返回一个index,html显示leetcodeDate的信息
-
+        NowCoderData nowCoderData = nowCoderService.getNowCoderInfo(username);
         ModelAndView mav = new ModelAndView("index");
-//        mav.addObject("data", leetCodeData);
-//        return mav;
+        mav.addObject("data1", nowCoderData);
+        return mav;
 
-
-        return  null;
     }
 
 }
