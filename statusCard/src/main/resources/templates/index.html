@@ -87,47 +87,49 @@
     <input type="submit" value="Submit">
 </form>
 
-<p>Easy Solved: <span th:text="${leetcodeData.easy_solved}"></span></p>
-<p>Medium Solved: <span th:text="${leetcodeData.medium_solved}"></span></p>
-<p>Hard Solved: <span th:text="${leetcodeData.hard_solved}"></span></p>
-<p>Total Solved: <span th:text="${leetcodeData.total_solved}"></span></p>
+<p>Easy Solved: <span th:text="${leetCodeData.easy_solved}"></span></p>
+<p>Medium Solved: <span th:text="${leetCodeData.medium_solved}"></span></p>
+<p>Hard Solved: <span th:text="${leetCodeData.hard_solved}"></span></p>
+<p>Total Solved: <span th:text="${leetCodeData.total_solved}"></span></p>
 
-<h1>NowCoder Info</h1>
 
-<form id="nowcoderForm">
-    <label for="nowcoderUserId">User ID:</label><br>
-    <input type="text" id="nowcoderUserId" name="userId"><br>
-    <input type="submit" value="Submit">
-</form>
 
-<p>Rating: <span th:text="${nowcoderData.rating}"></span></p>
-<p>Rating Rank: <span th:text="${nowcoderData.ratingRank}"></span></p>
-<p>Competition Count: <span th:text="${nowcoderData.competitionCount}"></span></p>
-<p>Has Passed Problem: <span th:text="${nowcoderData.hasPassedProblem}"></span></p>
+<!--<h1>NowCoder Info</h1>-->
 
-<script>
-    document.getElementById('leetcodeForm').addEventListener('submit', function(event) {
-        // Prevent the form from being submitted normally
-        event.preventDefault();
+<!--<form id="nowcoderForm">-->
+<!--    <label for="nowcoderUserId">User ID:</label><br>-->
+<!--    <input type="text" id="nowcoderUserId" name="userId"><br>-->
+<!--    <input type="submit" value="Submit">-->
+<!--</form>-->
 
-        // Get the user ID from the form
-        var userId = document.getElementById('leetcodeUserId').value;
+<!--<p>Rating: <span th:text="${nowcoderData.rating}"></span></p>-->
+<!--<p>Rating Rank: <span th:text="${nowcoderData.ratingRank}"></span></p>-->
+<!--<p>Competition Count: <span th:text="${nowcoderData.competitionCount}"></span></p>-->
+<!--<p>Has Passed Problem: <span th:text="${nowcoderData.hasPassedProblem}"></span></p>-->
 
-        // Send a GET request to the server
-        window.location.href = 'http://127.0.0.1:7788/leetcode/info/' + userId;
-    });
+<!--<script>-->
+<!--    document.getElementById('leetcodeForm').addEventListener('submit', function(event) {-->
+<!--        // Prevent the form from being submitted normally-->
+<!--        event.preventDefault();-->
 
-    document.getElementById('nowcoderForm').addEventListener('submit', function(event) {
-        // Prevent the form from being submitted normally
-        event.preventDefault();
+<!--        // Get the user ID from the form-->
+<!--        var userId = document.getElementById('leetcodeUserId').value;-->
 
-        // Get the user ID from the form
-        var userId = document.getElementById('nowcoderUserId').value;
+<!--        // Send a GET request to the server-->
+<!--        window.location.href = 'http://127.0.0.1:7788/leetcode/info/' + userId;-->
+<!--    });-->
 
-        // Send a GET request to the server
-        window.location.href = 'http://127.0.0.1:7788/nowcoder/info/' + userId;
-    });
-</script>
+<!--    document.getElementById('nowcoderForm').addEventListener('submit', function(event) {-->
+<!--        // Prevent the form from being submitted normally-->
+<!--        event.preventDefault();-->
 
-</body>
-</html>
+<!--        // Get the user ID from the form-->
+<!--        var userId = document.getElementById('nowcoderUserId').value;-->
+
+<!--        // Send a GET request to the server-->
+<!--        window.location.href = 'http://127.0.0.1:7788/nowcoder/info/' + userId;-->
+<!--    });-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->

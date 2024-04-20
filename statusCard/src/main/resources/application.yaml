@@ -1,5 +1,4 @@
 server:
-
   port: 7788
 
 spring:

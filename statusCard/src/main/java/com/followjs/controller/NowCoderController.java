@@ -22,6 +22,8 @@ public class NowCoderController {
         return new ModelAndView("form");
     }
 
+
+
     @PostMapping("/nowcoder/info")
     public ModelAndView getNewCoderInfo(@RequestParam String username) throws Exception {
         NowCoderData nowCoderData = nowCoderService.getNowCoderInfo(username);
