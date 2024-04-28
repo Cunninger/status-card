@@ -36,11 +36,6 @@ public class NowCoderServiceImpl implements NowCoderService {
         if (userId == null) {
             System.out.println("No match found.");
         } else {
-//            String url  = "https://ac.nowcoder.com/acm/contest/profile/"+userId;
-//            nowCoderData.setRating(Integer.parseInt(getRating(userId)));
-//            nowCoderData.setRatingRank(Integer.parseInt(getRatingRank(userId)));
-//            nowCoderData.setCompetitionCount(Integer.parseInt(getCompetitionCount(userId)));
-//            nowCoderData.setHasPassedProblem(Integer.parseInt(gethasPassedProblem(userId)));
 
             nowCoderData.setRating(getRating(userId));
             nowCoderData.setRatingRank(getRatingRank(userId));
