@@ -28,10 +28,10 @@ app.config.globalProperties.$http = axios.create({
 - 后端
 `maven` 打包正常流程
 - 前端
-1.将上述`main.js`文件中的` baseURL: 'http://localhost:7788'` 改为服务器IP，端口改为前端运行端口(默认为5173)
-  - 例如：`baseURL: 'http://0.0.0.0:5173'`
-2.`npm run build`打包前端项目，生成 `dist` 文件
-3.配置`Nginx`代理,参考如下
+    - 1.将上述`main.js`文件中的` baseURL: 'http://localhost:7788'` 改为服务器IP，端口改为前端运行端口(默认为5173)
+      - 例如：`baseURL: 'http://0.0.0.0:5173'`
+    - 2.`npm run build`打包前端项目，生成 `dist` 文件
+    - 3.配置`Nginx`代理,参考如下
 ```
 server {
   listen 5173;// 前端项目运行端口
