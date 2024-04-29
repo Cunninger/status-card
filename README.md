@@ -1,4 +1,10 @@
-
+# 技术
+- 后端：
+    - Springboot
+    - 正则表达式
+    - HttpClient
+- 前端：
+    - Vue
 # 界面
 ![image](https://github.com/Cunninger/status-card/assets/113076850/fd564aeb-fcae-434a-a036-ffadeb5b328e)
 
