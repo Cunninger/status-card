@@ -18,4 +18,7 @@ public class NowCoderController {
         NowCoderData nowCoderData = nowCoderService.getNowCoderInfo(username);
         return nowCoderData;
     }
+
+
+
 }

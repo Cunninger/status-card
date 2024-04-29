@@ -6,6 +6,10 @@ import com.followjs.entity.LeetCodeData;
 import com.followjs.service.LeetCodeService;
 import com.followjs.util.DifficultyCount;
 import com.followjs.util.Response;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,21 +22,57 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 /**
  * 功能：
  * 日期：2024/4/14 下午3:44
  */
 @Service
-public class LeetCodeServiceImpl implements LeetCodeService {
+public class LeetCodeServiceImpl extends BaseServiceImpl implements LeetCodeService {
 
 
     private RestTemplate restTemplate = new RestTemplate();
+
+    private String getAvatar(String username) throws Exception {
+        // 设置ChromeDriver的路径
+        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+        // 创建一个ChromeDriver的实例
+        WebDriver driver = new ChromeDriver();
+// 打开一个网页
+        driver.get("https://leetcode.cn/u/"+username+"/");
+        // 等待页面加载完成
+        Thread.sleep(5000);
+        // 选择第一个<source>元素
+        WebElement sourceElement = driver.findElement(By.tagName("source"));
+
+        // 获取srcset属性
+        String srcset = sourceElement.getAttribute("srcset");
+
+        // 打印srcset属性
+        System.out.println(srcset);
+
+        // 关闭浏览器
+        driver.quit();
+
+
+
+
+        byte[] imageBytes = restTemplate.getForObject(srcset, byte[].class);
+
+        String avatar = Base64.getEncoder().encodeToString(imageBytes);
+
+        return avatar;
+    }
+
     @Override
-    public LeetCodeData getLeetCodeInfo(String username) {
+    public LeetCodeData getLeetCodeInfo(String username) throws Exception {
         String url = "https://leetcode.cn/graphql/";
 
         // Set headers
@@ -68,7 +108,7 @@ public class LeetCodeServiceImpl implements LeetCodeService {
         ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
 
         // Parse the response body
-        String jsonString=  response.getBody();
+        String jsonString = response.getBody();
         ObjectMapper mapper = new ObjectMapper();
         Response responseObj = null;
         try {
@@ -93,11 +133,12 @@ public class LeetCodeServiceImpl implements LeetCodeService {
             leetCodeData.setTotal_solved(leetCodeData.getTotal_solved() + dc.getCount());
         }
 
+        leetCodeData.avatar = getAvatar(username);
+
+
         return leetCodeData;
 
     }
-
-
 
 
 }

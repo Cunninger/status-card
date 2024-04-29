@@ -2,6 +2,9 @@ package com.followjs.service.Impl;
 
 import com.followjs.entity.NowCoderData;
 import com.followjs.service.NowCoderService;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,6 +14,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,9 +23,10 @@ import java.util.regex.Pattern;
  * 日期：2024/4/15 上午8:42
  */
 @Service
-public class NowCoderServiceImpl implements NowCoderService {
+public class NowCoderServiceImpl extends BaseServiceImpl implements NowCoderService {
 
     private RestTemplate restTemplate = new RestTemplate();
+
     @Override
     public NowCoderData getNowCoderInfo(String name) throws Exception {
         NowCoderData nowCoderData = new NowCoderData();
@@ -41,11 +46,30 @@ public class NowCoderServiceImpl implements NowCoderService {
             nowCoderData.setRatingRank(getRatingRank(userId));
             nowCoderData.setCompetitionCount(getCompetitionCount(userId));
             nowCoderData.setHasPassedProblem(gethasPassedProblem(userId));
+            nowCoderData.setAvatar(getAvatar(userId));
 
             System.out.println("Matched text: " + nowCoderData.toString());
         }
         return nowCoderData;
 
+    }
+
+    private String getAvatar(String userId) throws Exception {
+
+        String html = sendRequest("https://ac.nowcoder.com/acm/contest/profile/" + userId);
+        // 解析 HTML
+        Document doc = Jsoup.parse(html);
+
+        // 提取 src 属性以特定前缀开头的 img 标签
+        Elements imgs = doc.select("img[src^=https://images.nowcoder.com/images]");
+        System.out.println(imgs);
+        //拿到第一个<img src =""
+        String url = imgs.get(0).attr("src");
+        byte[] imageBytes = restTemplate.getForObject(url, byte[].class);
+
+        String avatar = Base64.getEncoder().encodeToString(imageBytes);
+
+        return avatar;
     }
 
 
@@ -60,26 +84,9 @@ public class NowCoderServiceImpl implements NowCoderService {
     }
 
 
-    public static String sendRequest(String url) throws Exception {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(new URI(url)).build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
-    }
-
-    public static String matchRegex(String regex, String text) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
-        if (matcher.find()) {
-            return matcher.group(1);
-        } else {
-            return null;
-        }
-    }
-
     public String getRating(String userId) throws Exception {
 
-        String url  = "https://ac.nowcoder.com/acm/contest/profile/"+userId;
+        String url = "https://ac.nowcoder.com/acm/contest/profile/" + userId;
         System.out.println(url);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -114,7 +121,7 @@ public class NowCoderServiceImpl implements NowCoderService {
 
 
     public String getRatingRank(String userId) throws Exception {
-        String url  = "https://ac.nowcoder.com/acm/contest/profile/"+userId;
+        String url = "https://ac.nowcoder.com/acm/contest/profile/" + userId;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -144,10 +151,8 @@ public class NowCoderServiceImpl implements NowCoderService {
     }
 
 
-
-
     public String getCompetitionCount(String userId) throws Exception {
-        String url  = "https://ac.nowcoder.com/acm/contest/profile/"+userId;
+        String url = "https://ac.nowcoder.com/acm/contest/profile/" + userId;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -173,7 +178,8 @@ public class NowCoderServiceImpl implements NowCoderService {
                 System.out.println("Matched text: " + matcher.group(1));
                 return matcher.group(1);
             }
-        } if (count < 3) {
+        }
+        if (count < 3) {
             System.out.println("No match found.");
 
         }
@@ -183,7 +189,7 @@ public class NowCoderServiceImpl implements NowCoderService {
 
     public String gethasPassedProblem(String userId) throws Exception {
 
-        String url  = "https://ac.nowcoder.com/acm/contest/profile/"+userId+"/practice-coding";
+        String url = "https://ac.nowcoder.com/acm/contest/profile/" + userId + "/practice-coding";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -209,12 +215,14 @@ public class NowCoderServiceImpl implements NowCoderService {
                 System.out.println("Matched text: " + matcher.group(1));
                 return matcher.group(1);
             }
-        } if (count <2) {
+        }
+        if (count < 2) {
             System.out.println("No match found.");
 
         }
         return null;
     }
+
 
 
 

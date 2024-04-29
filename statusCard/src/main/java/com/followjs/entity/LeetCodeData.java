@@ -15,4 +15,18 @@ public class LeetCodeData {
     public int medium_solved;
     public int hard_solved;
 
+    public String avatar;
+
+
+    @Override
+    public String toString() {
+        return "LeetCodeData{" +
+                "total_solved=" + total_solved +
+                ", easy_solved=" + easy_solved +
+                ", medium_solved=" + medium_solved +
+                ", hard_solved=" + hard_solved +
+                ", avatar='" + avatar + '\'' +
+                '}';
+    }
+
 }

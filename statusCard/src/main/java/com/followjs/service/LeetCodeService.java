@@ -3,7 +3,7 @@ package com.followjs.service;
 import com.followjs.entity.LeetCodeData;
 
 public interface LeetCodeService {
-    public LeetCodeData getLeetCodeInfo(String username);
+    public LeetCodeData getLeetCodeInfo(String username) throws Exception;
 
 
 }
