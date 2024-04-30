@@ -4,62 +4,73 @@
       <text class="xx">数据显示</text>
     </div>
     <div class="container">
+
+
       <!-- Nowcoder -->
       <div class="box">
+        <img :src="nowcoder.avatarUrl" height="90px" width="90px" alt="Fan Art" />
+  
         <div class="title">Nowcoder</div>
         <div class="input">
-          <input type="text" v-model="NowCodertempValue" @keyup.enter="showContent" />
+          <input type="text" v-model="NowCodertempValue" @keyup.enter="showNowCoderContent" />
           <button @click="showNowCoderContent">确认</button>
         </div>
         <div class="attribute">
           <div class="left">
-            <span class="text">Rating:{{ nowcoder.rating }}</span>
-            <span class="text">RatingRank:{{ nowcoder.ratingRank }}</span>
+            <span class="text">Rating: <strong style="color: black;">{{ nowcoder.rating }}</strong> </span>
+            <span class="text">RatingRank: <strong style="color: black;">{{ nowcoder.ratingRank }}</strong> </span>
           </div>
           <div class="right">
-            <span class="text">CompetitionCount:{{ nowcoder.competitionCount }}</span>
-            <span class="text">HasPassedProblem:{{ nowcoder.hasPassedProblem }}</span>
+            <span class="text">CompetitionCount: <strong style="color: black;">{{ nowcoder.competitionCount }}</strong></span>
+            <span class="text">HasPassedProblem: <strong style="color: black;">{{ nowcoder.hasPassedProblem }}</strong> </span>
           </div>
         </div>
       </div>
 
+
       <!-- Leetcode -->
       <div class="box">
+        <img :src="leetcode.avatarUrl" height="90px" width="90px" alt="Fan Art" />
         <div class="title">Leetcode</div>
         <div class="input">
-          <input type="text" v-model="LeetCodetempValue" @keyup.enter="showContent" />
+          <input type="text" v-model="LeetCodetempValue" @keyup.enter="showLeetCoderContent" />
           <button @click="showLeetCoderContent">确认</button>
         </div>
         <div class="attribute">
           <div class="left">
-            <span class="text">Total_solved:{{ leetcode.total_solved }}</span>
-            <span class="text">Easy_solved:{{ leetcode.easy_solved }}</span>
+            <span class="text">Total_solved: <strong style="color: black;">{{ leetcode.total_solved }}</strong></span>
+            <span class="text">Easy_solved: <strong style="color: black;">{{ leetcode.easy_solved }}</strong></span>
           </div>
           <div class="right">
-            <span class="text">Medium_solved:{{ leetcode.medium_solved }}</span>
-            <span class="text">Hard_solved:{{ leetcode.hard_solved }}</span>
+            <span class="text">Medium_solved: <strong style="color: black;">{{ leetcode.medium_solved }}</strong></span>
+            <span class="text">Hard_solved: <strong style="color: black;">{{ leetcode.hard_solved }}</strong></span>
           </div>
         </div>
       </div>
+
 
       <!-- Luogu -->
       <div class="box">
         <div class="title">Luogu</div>
         <div class="input">
-          <input type="text" v-model="tempValue" @keyup.enter="showContent" />
-          <button @click="showContent">确认</button>
+          <input type="text" v-model="LuoGutempValue" @keyup.enter="showLuoguContent" />
+          <button @click="showLuoguContent">确认</button>
         </div>
         <div class="attribute">
           <div class="left">
-            <span class="text">Rating:{{ nowcoder.rating }}</span>
-            <span class="text">RatingRank:{{ nowcoder.ratingRank }}</span>
+            <span class="text">fans: <strong style="color: black;">{{ luogu.fans }}</strong></span>
+            <span class="text">hasSumbitted: <strong style="color: black;">{{ luogu.hasSumbitted}}</strong></span>
           </div>
           <div class="right">
-            <span class="text">CompetitionCount:{{ nowcoder.competitionCount }}</span>
-            <span class="text">HasPassedProblem:{{ nowcoder.hasPassedProblem }}</span>
+            <span class="text">hasPassed: <strong style="color: black;">{{ luogu.hasPassed }}</strong></span>
+            <span class="text">ranking: <strong style="color: black;">{{ luogu.ranking }}</strong></span>
           </div>
         </div>
       </div>
+
+
+
+      
 
       <div class="box"></div>
       <div class="box"></div>
@@ -70,7 +81,6 @@
 
 <script>
 
-import axios from 'axios';
 export default {
   data() {
     return {
@@ -80,7 +90,9 @@ export default {
         rating: '',
         ratingRank: '',
         competitionCount: '',
-        hasPassedProblem: ''
+        hasPassedProblem: '',
+        avatarBase64: '',  // 这里存放从后端获取的Base64编码的头像数据
+        avatarUrl: ''
       },
       leetcode:
       {
@@ -89,6 +101,14 @@ export default {
         easy_solved: '',
         medium_solved: '',
         hard_solved: ''
+      },
+      luogu:
+      {
+        name: 'Luogu',
+        fans: '',
+        hasSumbitted: '',
+        hasPassed: '',
+        ranking: ''
       }
 
     }
@@ -101,13 +121,16 @@ export default {
           this.nowcoder.ratingRank = response.data.ratingRank
           this.nowcoder.competitionCount = response.data.competitionCount
           this.nowcoder.hasPassedProblem = response.data.hasPassedProblem
-
+          this.nowcoder.avatarBase64 = response.data.avatar
+          this.nowcoder.avatarUrl = 'data:image/png;base64,' + this.nowcoder.avatarBase64
+        
 
         })
         .catch(error => {
           console.error(error);
         });
     },
+    // --------------------------------------------
     showLeetCoderContent() {
       this.$http.get('/api/leetcode/info/' + this.LeetCodetempValue)
         .then(response => {
@@ -116,6 +139,23 @@ export default {
           this.leetcode.medium_solved = response.data.medium_solved
           this.leetcode.hard_solved = response.data.hard_solved
           this.leetcode.total_solved = response.data.total_solved
+          this.leetcode.avatarBase64 = response.data.avatar
+          this.leetcode.avatarUrl = 'data:image/png;base64,' + this.leetcode.avatarBase64
+
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+
+    showLuoguContent() {
+      this.$http.get('/api/luogu/info/' + this.LuoGutempValue)
+        .then(response => {
+         
+          this.luogu.fans = response.data.fans
+          this.luogu.hasSumbitted = response.data.hasSumbitted
+          this.luogu.hasPassed = response.data.hasAccepted
+          this.luogu.ranking = response.data.Ranking
 
 
         })
