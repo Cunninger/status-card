@@ -8,7 +8,7 @@
 
       <!-- Nowcoder -->
       <div class="box">
-        <img :src="nowcoder.avatarUrl" height="90px" width="90px" alt="Fan Art" />
+        <img v-if="showNowCoderImage" :src="nowcoder.avatarUrl" height="90px" width="90px" alt="" />
   
         <div class="title">Nowcoder</div>
         <div class="input">
@@ -30,7 +30,7 @@
 
       <!-- Leetcode -->
       <div class="box">
-        <img :src="leetcode.avatarUrl" height="90px" width="90px" alt="Fan Art" />
+        <img v-if="showLeetCodeImage" :src="leetcode.avatarUrl" height="90px" width="90px" alt="" />
         <div class="title">Leetcode</div>
         <div class="input">
           <input type="text" v-model="LeetCodetempValue" @keyup.enter="showLeetCoderContent" />
@@ -51,6 +51,7 @@
 
       <!-- Luogu -->
       <div class="box">
+        <img v-if="showLuoguImage" :src="luogu.avatarUrl" height="90px" width="90px" alt="" />
         <div class="title">Luogu</div>
         <div class="input">
           <input type="text" v-model="LuoGutempValue" @keyup.enter="showLuoguContent" />
@@ -86,6 +87,7 @@ export default {
     return {
       nowcoder:
       {
+        showNowCoderImage: false,
         name: '牛客',
         rating: '',
         ratingRank: '',
@@ -96,6 +98,7 @@ export default {
       },
       leetcode:
       {
+        showLeetCodeImage: false,
         name: 'Leetcode',
         total_solved: '',
         easy_solved: '',
@@ -104,6 +107,7 @@ export default {
       },
       luogu:
       {
+        showLuoguImage: false,
         name: 'Luogu',
         fans: '',
         hasSumbitted: '',
@@ -115,6 +119,7 @@ export default {
   },
   methods: {
     showNowCoderContent() {
+      this.showNowCoderImage = true;
       this.$http.get('/api/nowcoder/info/' + this.NowCodertempValue)
         .then(response => {
           this.nowcoder.rating = response.data.rating
@@ -132,6 +137,7 @@ export default {
     },
     // --------------------------------------------
     showLeetCoderContent() {
+      this.showLeetCodeImage = true;
       this.$http.get('/api/leetcode/info/' + this.LeetCodetempValue)
         .then(response => {
           // this.nowcoder = response.data
@@ -149,6 +155,7 @@ export default {
     },
 
     showLuoguContent() {
+      this.showLuoguImage = true;
       this.$http.get('/api/luogu/info/' + this.LuoGutempValue)
         .then(response => {
          
