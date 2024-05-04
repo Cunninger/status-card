@@ -10,7 +10,8 @@
 
 
 # 效果图
-![image](https://github.com/Cunninger/status-card/assets/113076850/ccaa2451-6958-4259-a86f-83ae84577442)
+![image](https://github.com/Cunninger/status-card/assets/113076850/b4e1abda-8d38-4e6f-9f91-1a62c714b96d)
+
 
 
 # 快速部署
